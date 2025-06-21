@@ -33,6 +33,7 @@ const Lottery = () => {
   const [numbers, setNumbers] = useState([]);
   const [displayed, setDisplayed] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [copySuccess, setCopySuccess] = useState('');
 
   useEffect(() => {
     if (numbers.length === 0) {
@@ -58,6 +59,7 @@ const Lottery = () => {
     if (numbers.length > 0) {
       setNumbers([]);
       setDisplayed([]);
+      setCopySuccess('');
       return;
     }
 
@@ -71,6 +73,18 @@ const Lottery = () => {
     setNumbers(sorted);
   };
 
+  const handleCopy = () => {
+    if (numbers.length === 0) return;
+    const numbersString = numbers.join(', ');
+    navigator.clipboard.writeText(numbersString).then(() => {
+      setCopySuccess('복사 완료!');
+      setTimeout(() => setCopySuccess(''), 2000);
+    }, () => {
+      setCopySuccess('복사 실패');
+      setTimeout(() => setCopySuccess(''), 2000);
+    });
+  };
+
   return (
     <div className="lottery-container">
       <LottoBallsSVG />
@@ -82,9 +96,17 @@ const Lottery = () => {
           <div className="placeholder-text">버튼을 눌러 번호를 생성하세요.</div>
         )}
       </div>
-      <button onClick={handleGenerate} className="generate-button" disabled={isAnimating}>
-        <span role="img" aria-label="dice">🎲</span> {numbers.length > 0 && !isAnimating ? '초기화' : '번호 생성'}
-      </button>
+      <div className="buttons-container">
+        <button onClick={handleGenerate} className="generate-button" disabled={isAnimating}>
+          <span role="img" aria-label="dice">🎲</span> {numbers.length > 0 && !isAnimating ? '초기화' : '번호 생성'}
+        </button>
+        {numbers.length > 0 && !isAnimating && (
+          <button onClick={handleCopy} className="share-button">
+            <span role="img" aria-label="share">🔗</span> 공유
+          </button>
+        )}
+      </div>
+      {copySuccess && <div className="copy-feedback">{copySuccess}</div>}
     </div>
   );
 };
