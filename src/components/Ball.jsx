@@ -8,10 +8,10 @@ const getBallColor = (number) => {
   return '#388E3C'; // Green
 };
 
-const Ball = ({ number }) => {
+const Ball = ({ number, animate }) => {
   return (
     <div
-      className="ball"
+      className={`ball${animate ? ' ball-animate' : ''}`}
       style={{ backgroundColor: getBallColor(number) }}
     >
       {number}
