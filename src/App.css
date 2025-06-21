@@ -1,8 +1,7 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
@@ -42,38 +41,80 @@
 }
 
 .App {
+  min-height: 100vh;
+  min-width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f0f2f5;
+  background: linear-gradient(120deg, #f0f2f5 0%, #e3e9f7 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 .lottery-container {
   background: white;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: 48px 56px;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
   text-align: center;
   width: 100%;
-  max-width: 500px;
-  margin: 20px;
+  max-width: 700px;
+  min-width: 320px;
+  margin: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .lottery-title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   color: #333;
-  margin-bottom: 30px;
+  margin-bottom: 36px;
+  font-weight: 700;
 }
 
 .balls-container {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-bottom: 40px;
+  gap: 24px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
   min-height: 70px;
   align-items: center;
+}
+
+.ball {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
+  transition: background 0.2s, color 0.2s, width 0.2s, height 0.2s, font-size 0.2s;
+}
+
+.generate-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 20px 48px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 8px;
+}
+.generate-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+.generate-button:active {
+  transform: translateY(0);
 }
 
 .placeholder-text {
@@ -81,37 +122,100 @@
   font-size: 1.1rem;
 }
 
-.ball {
+/* 태블릿 대응 */
+@media (max-width: 900px) {
+  .lottery-container {
+    padding: 32px 12px;
+    max-width: 98vw;
+    margin: 12px;
+  }
+  .balls-container {
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .ball {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+  .generate-button {
+    padding: 14px 24px;
+    font-size: 1.1rem;
+  }
+  .lottery-title {
+    font-size: 2rem;
+  }
+}
+
+/* 모바일 대응 */
+@media (max-width: 480px) {
+  .lottery-container {
+    padding: 12px 2vw;
+    min-width: 0;
+    max-width: 100vw;
+    border-radius: 0;
+    margin: 0;
+  }
+  .lottery-title {
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+  }
+  .balls-container {
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+  .ball {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+  .generate-button {
+    padding: 8px 8vw;
+    font-size: 0.95rem;
+    border-radius: 6px;
+  }
+}
+
+.lotto-drum-bg {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #4CAF50;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: inset -5px -5px 10px rgba(0,0,0,0.2);
+  margin-bottom: 8px;
+  width: 100%;
+  min-height: 120px;
+  z-index: 1;
+}
+.lotto-drum-bg svg {
+  filter: drop-shadow(0 4px 16px rgba(255, 208, 0, 0.15));
 }
 
-.generate-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+.ball-animate {
+  animation: pop-in 0.35s cubic-bezier(0.4, 1.4, 0.6, 1) both;
+}
+@keyframes pop-in {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.2;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.generate-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
+.lotto-balls-hero {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  min-height: 70px;
+  z-index: 1;
 }
-
-.generate-button:active {
-  transform: translateY(0);
+.lotto-balls-hero svg {
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.10));
 }
